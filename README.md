@@ -3,11 +3,11 @@
     <source
       width="128px"
       media="(prefers-color-scheme: dark)"
-      srcset="assests/images/Brave-origin-Unlocker-Light.svg"
+      srcset="assests/images/Brave-origin-Profile-Light.svg"
     />
     <img 
       width="128px"
-      src="assests/images/Brave-origin-Unlocker-Dark.svg"/>
+      src="assests/images/Brave-origin-Profile-Dark.svg"/>
 </picture>
 
 # Brave Origin Profile Manager & Offline State Utility
@@ -40,7 +40,7 @@ This script is an open-source **local configuration & profile state manager**. I
 Open any PowerShell terminal (standard user or Admin) and run:
 
 ```powershell
-iex (iwr -Uri "https://raw.githubusercontent.com/mrdarksidetm/Brave-Origin-Unlocker-Windows/main/scripts/unlocker.ps1" -UseBasicParsing).Content
+iex (iwr -Uri "https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" -UseBasicParsing).Content
 ```
 
 *Auto-detects installed channels, backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch.*
@@ -49,10 +49,10 @@ iex (iwr -Uri "https://raw.githubusercontent.com/mrdarksidetm/Brave-Origin-Unloc
 
 ## 🛠️ CLI Parameters & Power-User Flags
 
-Want more control than blind one-click execution? Run `unlocker.ps1` with dedicated switches:
+Want more control than blind one-click execution? Run `profile.ps1` with dedicated switches:
 
 ```powershell
-.\unlocker.ps1 [-Channel <Release|Beta|Nightly|All>] [-Force] [-Install] [-UserDataPath <path>] [-Restore] [-NoBackup]
+.\profile.ps1 [-Channel <Release|Beta|Nightly|All>] [-Force] [-Install] [-UserDataPath <path>] [-Restore] [-NoBackup]
 ```
 
 | Parameter | Type | Default | What it does |
@@ -70,19 +70,19 @@ Want more control than blind one-click execution? Run `unlocker.ps1` with dedica
 
 ```powershell
 # Standard: Detect whatever Brave Origin channels you have installed and configure them
-.\unlocker.ps1
+.\profile.ps1
 
 # The "Just do it": Kill active browser instances automatically and patch
-.\unlocker.ps1 -Force
+.\profile.ps1 -Force
 
 # Rollback: Revert everything back to how it was before running the patch
-.\unlocker.ps1 -Restore
+.\profile.ps1 -Restore
 
 # Portable mode: Target an isolated build on an external drive
-.\unlocker.ps1 -UserDataPath "E:\PortableApps\Brave-Origin\User Data"
+.\profile.ps1 -UserDataPath "E:\PortableApps\Brave-Origin\User Data"
 
-# Missing the browser? Download, install, and unlock in one command
-.\unlocker.ps1 -Install -Force
+# Missing the browser? Download, install, and configure in one command
+.\profile.ps1 -Install -Force
 ```
 
 ---
@@ -116,7 +116,7 @@ If GitHub ever capitulates to an overreaching takedown notice, this tool cannot 
 
 ```powershell
 # Create an immutable git bundle of this entire repository
-git bundle create brave-origin-unlocker.bundle --all
+git bundle create brave-origin-profile.bundle --all
 ```
 
 You can also mirror this repo to decentralized or EU-governed platforms like **Codeberg** (hosted in Germany under Directive 2009/24/EC interoperability protections) or **Radicle**.

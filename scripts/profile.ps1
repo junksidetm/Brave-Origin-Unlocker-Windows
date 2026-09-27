@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Brave Origin Unlocker for Windows.
+    Brave Origin Profile Configuration Tool for Windows.
 
 .DESCRIPTION
-    Patches Brave Origin's local configuration ('Local State') to unlock full
+    Patches Brave Origin's local configuration ('Local State') to configure profile
     features offline without recurring subscription checks. Works across Release,
     Beta, and Nightly channels, supports portable installs, automatic backups,
     and rollback/restore.
@@ -28,19 +28,19 @@
     Skips creating a backup (.bak) of the original configuration file.
 
 .EXAMPLE
-    .\unlocker.ps1
+    .\profile.ps1
     Auto-detects installed Brave Origin channels and applies the patch.
 
 .EXAMPLE
-    .\unlocker.ps1 -Force
-    Closes running Brave instances and unlocks automatically.
+    .\profile.ps1 -Force
+    Closes running Brave instances and configures profile automatically.
 
 .EXAMPLE
-    .\unlocker.ps1 -Restore
+    .\profile.ps1 -Restore
     Restores the original Local State files from backup.
 
 .EXAMPLE
-    .\unlocker.ps1 -UserDataPath "D:\PortableApps\Brave-Origin\Data"
+    .\profile.ps1 -UserDataPath "D:\PortableApps\Brave-Origin\Data"
     Patches a specific portable installation.
 #>
 [CmdletBinding(SupportsShouldProcess)]
@@ -333,7 +333,7 @@ function Patch-LocalStateFile {
     try {
         $testContent = [System.IO.File]::ReadAllText($Path, [System.Text.Encoding]::UTF8)
         $null = $testContent | ConvertFrom-Json
-        Write-Log -Level SUCCESS "$DisplayName unlocked successfully."
+        Write-Log -Level SUCCESS "$DisplayName configured successfully."
         return $true
     } catch {
         Write-Log -Level ERROR "Verification failed for '$Path'. Output was not valid JSON."
@@ -369,8 +369,8 @@ function Restore-LocalStateFile {
 
 # --- Entry Point ---
 Write-Host ""
-Write-Host "  Brave Origin Unlocker for Windows" -ForegroundColor Cyan
-Write-Host "  https://github.com/mrdarksidetm/Brave-Origin-Unlocker-Windows" -ForegroundColor DarkGray
+Write-Host "  Brave Origin Profile for Windows" -ForegroundColor Cyan
+Write-Host "  https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows" -ForegroundColor DarkGray
 Write-Host ""
 
 $targets = @()
@@ -414,7 +414,7 @@ if ($UserDataPath) {
 
         if ($detected.Count -eq 0) {
             Write-Log -Level ERROR "No Brave Origin installations available to patch."
-            Write-Log -Level INFO  "If you have a portable build, run: .\unlocker.ps1 -UserDataPath <path-to-user-data>"
+            Write-Log -Level INFO  "If you have a portable build, run: .\profile.ps1 -UserDataPath <path-to-user-data>"
             return
         }
     }
@@ -442,7 +442,7 @@ Write-Host ""
 if ($Restore) {
     Write-Log -Level SUCCESS "Restore complete ($successCount/$totalTargets configuration(s) restored)."
 } else {
-    Write-Log -Level SUCCESS "Unlock complete ($successCount/$totalTargets configuration(s) ready)."
+    Write-Log -Level SUCCESS "Configuration complete ($successCount/$totalTargets configuration(s) ready)."
     Write-Host "  You can now launch Brave Origin without purchase prompts." -ForegroundColor DarkGray
 }
 Write-Host ""

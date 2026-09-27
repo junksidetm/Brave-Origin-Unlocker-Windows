@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve Brave Origin Unlocker
+about: Create a report to help us improve Brave Origin Profile
 title: '[BUG] '
 labels: bug
 assignees: ''

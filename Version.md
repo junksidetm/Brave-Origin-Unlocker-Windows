@@ -129,3 +129,20 @@
   - **Plaintext Configuration Precedent (*Lexmark v. Static Control*)**: Formally documented that unencrypted, plaintext JSON files on a user's local disk do not meet the legal threshold of an "effective technological protection measure" (TPM).
   - **MPL 2.0 Open-Source Provenance**: Documented Brave's underlying open-source codebase and the statutory right to compile from source.
   - **Anti-Censorship & Mirroring Guide**: Added Git bundle creation instructions and Codeberg/decentralized host recommendations.
+
+### [2026-09-27 20:51:00 IST] - Project Rebranding: Migration from "Unlocker" to "Profile" & Multi-Remote Hosting
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Files**:
+  - `scripts/profile.ps1` (Renamed from `scripts/unlocker.ps1` and updated)
+  - `assests/images/Brave-origin-Profile-Dark.svg` (Renamed from `assests/images/Brave-origin-Unlocker-Dark.svg`)
+  - `assests/images/Brave-origin-Profile-Light.svg` (Renamed from `assests/images/Brave-origin-Unlocker-Light.svg`)
+  - `.github/ISSUE_TEMPLATE/bug_report.md` (Updated)
+  - `.github/workflows/validate.yml` (Updated)
+  - `README.md` (Updated)
+  - `docs/index.html` (Updated)
+  - `Version.md` (Appended)
+- **Modifications & Migration Details**:
+  - **Terminology Neutralization**: Systematically renamed all references from "Unlocker" to "Profile" across codebase, documentation, CI workflows, and website assets to align with utility-focused profile configuration semantics.
+  - **Script Renaming & Verification**: Renamed `unlocker.ps1` to `profile.ps1`, updated AST syntax parsing and PSScriptAnalyzer validation tests, and verified zero syntax errors.
+  - **Multi-Platform Hosting Migration**: Reconfigured documentation URLs and download links to target decentralized and independent Git hosting providers (Codeberg and GitLab) with verified SSH ed25519 signing keys.
