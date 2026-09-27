@@ -1,4 +1,4 @@
-name: Validate PowerShell Script
+name: Validate Scripts
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate:
-    name: Lint & Syntax Check
+  validate-powershell:
+    name: Lint & Syntax Check (PowerShell)
     runs-on: windows-latest
 
     steps:
@@ -39,3 +39,18 @@ jobs:
             throw "PSScriptAnalyzer found blocking errors."
           }
           Write-Host "PSScriptAnalyzer validation passed!" -ForegroundColor Green
+
+  validate-macos-shell:
+    name: Lint & Syntax Check (macOS Shell)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate macOS Shell Script Syntax
+        run: |
+          echo "Checking syntax for ./scripts/profile.sh..."
+          bash -n ./scripts/profile.sh
+          sh -n ./scripts/profile.sh
+          echo "Shell syntax validation passed!"

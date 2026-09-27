@@ -159,3 +159,35 @@
   - **Dual-Mirror Documentation**: Enhanced `README.md` with explicit, dedicated Quick Run one-liners, repository clone instructions, and issue tracker references for both primary (Codeberg) and secondary mirror (GitLab) hosts.
   - **Showcase Navigation & Footer**: Expanded navigation bar and footer in `docs/index.html` to link to both Codeberg and GitLab repositories and issue trackers.
   - **Automated GitLab CI Pipeline**: Created `.gitlab-ci.yml` using `mcr.microsoft.com/powershell` image to automatically execute AST parser validation on `scripts/profile.ps1` upon commit push.
+
+### [2026-09-28 02:10:00 IST] - macOS Native Zero-Dependency Profile Engine & Cross-Platform CI
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Platform**: macOS (Darwin 10.15 Catalina through macOS 15 Sequoia / Apple Silicon & Intel)
+- **Target Channels**:
+  - Brave-Origin (Release)
+  - Brave-Origin-Beta (Beta)
+  - Brave-Origin-Nightly (Nightly)
+- **Libraries & Tools**:
+  - macOS Shell: `/bin/zsh`, `/bin/sh` (POSIX compliant)
+  - JavaScript for Automation (JXA): `osascript -l JavaScript` (JavaScriptCore Foundation bindings)
+  - macOS Subsystem Utilities: `sw_vers`, `hdiutil`, `ditto`, `plutil`, `curl`, `pkill`, `xattr`
+  - CI Engines: GitLab CI (`alpine:latest`, `bash`), GitHub Actions (`macos-latest`)
+- **Modules & Files Created/Updated**:
+  - `scripts/profile.sh` — Native macOS zero-dependency configuration script supporting architecture auto-detection (`arm64`/`x86_64`), native DMG download and installation via `hdiutil` & `ditto`, safe atomic JSON state manipulation via `osascript` JXA, process lifecycle handling, and `.bak` backups.
+  - `.gitlab-ci.yml` — Added `validate-macos-shell` pipeline stage to run automated syntax checks (`bash -n`) on `scripts/profile.sh`.
+  - `.github/workflows/validate.yml` — Added `validate-macos-shell` job running on `macos-latest` to lint and validate shell script syntax across commits and pull requests.
+  - `README.md` — Updated badges, overview, one-liners for Codeberg & GitLab mirrors, and CLI flag documentation for both Windows and macOS platforms.
+  - `Version.md` — Appended changelog history according to project tracking mandates.
+- **Architectural & Cross-Platform Implementation Details**:
+  - **Zero-Dependency Mandate**: Replaced third-party runtime requirements (Deno, Node.js, Python, or Homebrew) with macOS pre-installed core components (`osascript` JXA and `plutil`), bypassing Apple's developer tools prompt on macOS Monterey+.
+  - **Atomic Safe State Mutation**: Leveraged Apple's native Foundation framework (`ObjC.import('Foundation')` and `writeToFileAtomicallyEncodingError`) to read, patch `brave.origin` and `skus.state`, and serialize UTF-8 JSON atomically without BOM headers.
+  - **Architecture-Aware CDN Routing**: Automated resolution of official Brave Origin `.dmg` installers for Apple Silicon (`arm64`) vs Intel (`x86_64`) with automated mount, Gatekeeper quarantine clearance (`xattr -cr`), and directory staging.
+
+### [2026-09-28 02:11:00 IST] - Interactive Showcase Dual-OS Switcher
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Platform**: Web Showcase / Documentation Portal (`docs/index.html`)
+- **Modules & Files Updated**:
+  - `docs/index.html` — Integrated interactive OS platform switcher tab component (`switchPlatform`) allowing users to dynamically toggle between Windows (PowerShell) and macOS (Terminal / Zsh) one-liner commands, download targets, and platform metadata.
+  - `Version.md` — Appended changelog entry tracking web showcase enhancements.
