@@ -113,3 +113,19 @@
   - Adopted an aggressive, witty, and razor-sharp developer voice addressing the $60 local JSON flag paywall and Linux disparity.
 - **Verification**:
   - Inspected formatting, table rendering, code block syntax, and relative asset paths.
+
+### [2026-09-27 10:41:00 IST] - Legal Hardening & Statutory Loophole Implementation
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Files**:
+  - `LEGAL.md` (Created)
+  - `README.md` (Updated)
+  - `docs/index.html` (Updated)
+  - `Version.md` (Appended)
+- **Implemented Legal Safeguards**:
+  - **Nominative Fair Use**: Added explicit disclaimers under 15 U.S.C. § 1125 clarifying that all modified logo badges, silhouettes, and brand references are strictly nominative identifiers and do not imply endorsement or affiliation.
+  - **Dual-Use Doctrine (*Sony Betamax*)**: Reframed the tool's core identity as an offline profile state and local configuration utility for enterprise deployment, offline developer testing, and portable environments.
+  - **DMCA Section 1201(f) Interoperability**: Citing statutory protection for reverse engineering and configuration modification to achieve software interoperability.
+  - **Plaintext Configuration Precedent (*Lexmark v. Static Control*)**: Formally documented that unencrypted, plaintext JSON files on a user's local disk do not meet the legal threshold of an "effective technological protection measure" (TPM).
+  - **MPL 2.0 Open-Source Provenance**: Documented Brave's underlying open-source codebase and the statutory right to compile from source.
+  - **Anti-Censorship & Mirroring Guide**: Added Git bundle creation instructions and Codeberg/decentralized host recommendations.
