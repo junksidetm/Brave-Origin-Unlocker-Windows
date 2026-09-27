@@ -14,8 +14,16 @@
 **Because a $60 paywall for a stripped-down browser on Windows that is literally free on Linux is absurd.**
 
 <p>
-  <a href="#-quick-run-one-liner">Quick Run</a> •
+  <a href="https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/Codeberg-Repository-2185d0?logo=codeberg&logoColor=white" alt="Codeberg" /></a>
+  <a href="https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/GitLab-Mirror-fc6d26?logo=gitlab&logoColor=white" alt="GitLab" /></a>
+  <img src="https://img.shields.io/badge/PowerShell-5.1%2B%20%7C%207%2B-5391FE?logo=powershell&logoColor=white" alt="PowerShell" />
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
+</p>
+
+<p>
+  <a href="#-quick-run-one-liners">Quick Run</a> •
   <a href="#-cli-parameters--power-user-flags">CLI Options</a> •
+  <a href="#-dual-mirror-git-hosts-codeberg--gitlab">Mirrors</a> •
   <a href="#-the-open-source-reality-mpl-20-loophole">MPL 2.0 Loophole</a> •
   <a href="#-statutory-defense--legal-loopholes">Legal Shield</a> •
   <a href="LEGAL.md">LEGAL.md</a>
@@ -35,15 +43,21 @@ This script is an open-source **local configuration & profile state manager**. I
 
 ---
 
-## ⚡ Quick Run (One-Liner)
+## ⚡ Quick Run (One-Liners)
 
-Open any PowerShell terminal (standard user or Admin) and run:
+Open any PowerShell terminal (standard user or Admin) and execute via your preferred host:
 
+### 🏔️ Option A: Codeberg (Primary / EU / Forgejo)
 ```powershell
 iex (iwr -Uri "https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" -UseBasicParsing).Content
 ```
 
-*Auto-detects installed channels, backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch.*
+### 🦊 Option B: GitLab (Mirror)
+```powershell
+iex (iwr -Uri "https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/raw/main/scripts/profile.ps1" -UseBasicParsing).Content
+```
+
+*Auto-detects installed channels, backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch. Both mirrors provide identical, signed code.*
 
 ---
 
@@ -110,16 +124,31 @@ On Linux, Brave literally distributes Brave Origin for free. Under the Mozilla P
 
 ---
 
-## 🌐 Anti-Censorship & Decentralized Mirroring
+## 🌐 Dual-Mirror Git Hosts: Codeberg & GitLab
 
-If GitHub ever capitulates to an overreaching takedown notice, this tool cannot be erased. Create your own local, un-censorable git mirror right now:
+To ensure continuous availability and resilience against centralized platform takedowns, this repository is maintained with identical, cryptographically signed commits across two independent hosts:
 
+| Provider | Role / Framework | Clone URL | Web Repository | Issue Tracker |
+| :--- | :--- | :--- | :--- | :--- |
+| **Codeberg** | Primary (EU / Forgejo) | `https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows.git` | [codeberg.org/...](https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows) | [Codeberg Issues](https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/issues) |
+| **GitLab** | Secondary Mirror | `https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows.git` | [gitlab.com/...](https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows) | [GitLab Issues](https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/issues) |
+
+### Clone via either provider:
+```powershell
+# Clone from Codeberg (HTTPS or SSH)
+git clone https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows.git
+git clone git@codeberg.org:mrdarksidetm/Brave-Origin-Profile-Windows.git
+
+# Clone from GitLab (HTTPS or SSH)
+git clone https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows.git
+git clone git@gitlab.com:mrdarksidetm/Brave-Origin-Profile-Windows.git
+```
+
+### Local Immutable Backup:
 ```powershell
 # Create an immutable git bundle of this entire repository
 git bundle create brave-origin-profile.bundle --all
 ```
-
-You can also mirror this repo to decentralized or EU-governed platforms like **Codeberg** (hosted in Germany under Directive 2009/24/EC interoperability protections) or **Radicle**.
 
 ---
 
@@ -131,4 +160,4 @@ Use at your own discretion. Provided 'as is' without warranties.
 ---
 
 ## License
-© [Abhijeet Yadav](https://github.com/mrdarksidetm) 2026 | Licensed under the [MIT License](LICENSE). See [LEGAL.md](LEGAL.md) for statutory disclosures.
+© [Abhijeet Yadav](https://codeberg.org/mrdarksidetm) ([GitLab](https://gitlab.com/mrdarksidetm)) 2026 | Licensed under the [MIT License](LICENSE). See [LEGAL.md](LEGAL.md) for statutory disclosures.

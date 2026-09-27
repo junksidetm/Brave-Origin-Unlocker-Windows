@@ -146,3 +146,16 @@
   - **Terminology Neutralization**: Systematically renamed all references from "Unlocker" to "Profile" across codebase, documentation, CI workflows, and website assets to align with utility-focused profile configuration semantics.
   - **Script Renaming & Verification**: Renamed `unlocker.ps1` to `profile.ps1`, updated AST syntax parsing and PSScriptAnalyzer validation tests, and verified zero syntax errors.
   - **Multi-Platform Hosting Migration**: Reconfigured documentation URLs and download links to target decentralized and independent Git hosting providers (Codeberg and GitLab) with verified SSH ed25519 signing keys.
+
+### [2026-09-27 21:22:00 IST] - Dual-Host Documentation & GitLab CI Integration
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Files**:
+  - `README.md` (Updated)
+  - `docs/index.html` (Updated)
+  - `.gitlab-ci.yml` (Created)
+  - `Version.md` (Appended)
+- **Architectural & Cross-Platform Updates**:
+  - **Dual-Mirror Documentation**: Enhanced `README.md` with explicit, dedicated Quick Run one-liners, repository clone instructions, and issue tracker references for both primary (Codeberg) and secondary mirror (GitLab) hosts.
+  - **Showcase Navigation & Footer**: Expanded navigation bar and footer in `docs/index.html` to link to both Codeberg and GitLab repositories and issue trackers.
+  - **Automated GitLab CI Pipeline**: Created `.gitlab-ci.yml` using `mcr.microsoft.com/powershell` image to automatically execute AST parser validation on `scripts/profile.ps1` upon commit push.
