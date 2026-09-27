@@ -1,13 +1,8 @@
 <div align="center"> 
 <picture>
-    <source
-      width="128px"
-      media="(prefers-color-scheme: dark)"
-      srcset="assests/images/Brave-origin-Profile-Light.svg"
-    />
-    <img 
-      width="128px"
-      src="assests/images/Brave-origin-Profile-Dark.svg"/>
+<img
+  width="128px"
+  src="assests/images/Brave-origin-Profile-Light.svg"/>
 </picture>
 
 # Brave Origin Profile Manager & Offline State Utility
