@@ -344,18 +344,8 @@
         </div>
       </div>
       <p class="vd-hero-desc">
-        As Brave Origin stores purchase validation state locally on Windows and macOS, these native scripts modify the exact local configuration files to satisfy client verification logic. 100% offline-friendly, zero external binary dependencies, and instant execution.
+        As Brave Origin stores purchase validation state locally on Windows, this PowerShell script modifies the exact local configuration files natively to satisfy the client verification logic. 100% offline-friendly, zero external binary dependencies, and instant execution.
       </p>
-
-      <!-- Platform Selection Tabs -->
-      <div style="display: flex; gap: 10px; margin-bottom: 14px; justify-content: center;">
-        <button id="tabWindows" class="vd-btn-primary" onclick="switchPlatform('windows')" style="padding: 8px 20px; font-size: 14px; border-radius: 9999px; cursor: pointer;">
-          🪟 Windows (PowerShell)
-        </button>
-        <button id="tabMacos" class="vd-btn-ghost" onclick="switchPlatform('macos')" style="padding: 8px 20px; font-size: 14px; border-radius: 9999px; cursor: pointer;">
-          🍎 macOS (Terminal / Zsh)
-        </button>
-      </div>
 
       <!-- Terminal Quick Run Box -->
       <div class="vd-terminal">
@@ -365,8 +355,8 @@
             <span class="vd-dot vd-dot-yellow"></span>
             <span class="vd-dot vd-dot-green"></span>
           </div>
-          <span class="vd-terminal-title" id="termTitle">PowerShell 5.1+ / 7+</span>
-          <span class="vd-admin-badge" id="termBadge" style="background: rgba(61, 220, 132, 0.15); color: var(--vd-color-success); border-color: rgba(61, 220, 132, 0.3);">No Admin Required</span>
+          <span class="vd-terminal-title">PowerShell 5.1+ / 7+</span>
+          <span class="vd-admin-badge" style="background: rgba(61, 220, 132, 0.15); color: var(--vd-color-success); border-color: rgba(61, 220, 132, 0.3);">No Admin Required</span>
         </div>
 
         <div class="vd-code-snippet" id="psSnippet" onclick="copyCommand()">
@@ -375,10 +365,10 @@
         </div>
 
         <div class="vd-terminal-actions">
-          <a id="downloadLink" href="https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" download="profile.ps1" class="vd-btn-ghost">
+          <a href="https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" download="profile.ps1" class="vd-btn-ghost">
             ↓ Download profile.ps1
           </a>
-          <button id="copyBtn" class="vd-btn-primary" onclick="copyCommand()">
+          <button class="vd-btn-primary" onclick="copyCommand()">
             Copy PowerShell Command
           </button>
         </div>
@@ -488,38 +478,6 @@
   </div>
 
   <script>
-    let currentOS = 'windows';
-
-    function switchPlatform(os) {
-      currentOS = os;
-      const tabWin = document.getElementById('tabWindows');
-      const tabMac = document.getElementById('tabMacos');
-      const termTitle = document.getElementById('termTitle');
-      const cmdText = document.getElementById('cmdText');
-      const downloadLink = document.getElementById('downloadLink');
-      const copyBtn = document.getElementById('copyBtn');
-
-      if (os === 'windows') {
-        tabWin.className = 'vd-btn-primary';
-        tabMac.className = 'vd-btn-ghost';
-        termTitle.innerText = 'PowerShell 5.1+ / 7+';
-        cmdText.innerText = 'iex (iwr -Uri "https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" -UseBasicParsing).Content';
-        downloadLink.href = 'https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1';
-        downloadLink.setAttribute('download', 'profile.ps1');
-        downloadLink.innerText = '↓ Download profile.ps1';
-        copyBtn.innerText = 'Copy PowerShell Command';
-      } else {
-        tabMac.className = 'vd-btn-primary';
-        tabWin.className = 'vd-btn-ghost';
-        termTitle.innerText = 'macOS Terminal (Zsh / Bash)';
-        cmdText.innerText = 'curl -fsSL https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.sh | bash';
-        downloadLink.href = 'https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.sh';
-        downloadLink.setAttribute('download', 'profile.sh');
-        downloadLink.innerText = '↓ Download profile.sh';
-        copyBtn.innerText = 'Copy macOS Command';
-      }
-    }
-
     function copyCommand() {
       const cmd = document.getElementById('cmdText').innerText.trim();
       navigator.clipboard.writeText(cmd).then(() => {

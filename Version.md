@@ -191,3 +191,18 @@
 - **Modules & Files Updated**:
   - `docs/index.html` — Integrated interactive OS platform switcher tab component (`switchPlatform`) allowing users to dynamically toggle between Windows (PowerShell) and macOS (Terminal / Zsh) one-liner commands, download targets, and platform metadata.
   - `Version.md` — Appended changelog entry tracking web showcase enhancements.
+
+### [2026-09-28 02:18:00 IST] - Architecture & Repository Segregation Rollback
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Platform**: Windows 10 / 11 (x64)
+- **Target Repository**: Brave-Origin-Profile-Windows
+- **Modules & Files Reverted/Cleaned**:
+  - `scripts/profile.sh` — Removed from Windows repository to maintain strict single-platform repository architecture. Relocated to dedicated `Brave-Origin-Profile-MacOS` repository.
+  - `.gitlab-ci.yml` — Restored pure Windows PowerShell validation pipeline.
+  - `.github/workflows/validate.yml` — Restored pure Windows PowerShell validation workflow.
+  - `README.md` — Restored pure Windows-focused documentation, one-liners, and parameter tables.
+  - `docs/index.html` — Restored clean Windows PowerShell presentation.
+  - `Version.md` — Appended changelog entry documenting repository separation and rollback.
+- **Architectural Rationalization**:
+  - Enforced strict repository boundaries. Windows and macOS tools now maintain independent, dedicated repositories for optimal modularity and clarity.

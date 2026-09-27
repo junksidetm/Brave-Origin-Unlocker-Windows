@@ -12,7 +12,6 @@
   <a href="https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/Codeberg-Repository-2185d0?logo=codeberg&logoColor=white" alt="Codeberg" /></a>
   <a href="https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/GitLab-Mirror-fc6d26?logo=gitlab&logoColor=white" alt="GitLab" /></a>
   <img src="https://img.shields.io/badge/PowerShell-5.1%2B%20%7C%207%2B-5391FE?logo=powershell&logoColor=white" alt="PowerShell" />
-  <img src="https://img.shields.io/badge/macOS-zsh%20%7C%20bash%20%7C%20JXA-black?logo=apple&logoColor=white" alt="macOS" />
   <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
 </p>
 
@@ -31,51 +30,36 @@
 ---
 
 ### What is this?
-Brave charges a $60 buyout for "Brave Origin" on Windows and macOS (a clean Brave build stripped of crypto wallets, VPN promos, and AI bloat). Meanwhile, the exact same build is completely free on Linux.
+Brave charges a $60 buyout for "Brave Origin" on Windows (a clean Brave build stripped of crypto wallets, VPN promos, and AI bloat). Meanwhile, the exact same build is completely free on Linux.
 
-The punchline? The paywall check is literally a client-side flag (`purchase_validated: true`) stored inside a local plaintext JSON file (`Local State`). 
+The punchline? The Windows paywall check is literally a client-side flag (`purchase_validated: true`) stored inside a local plaintext JSON file (`Local State`). 
 
-This project provides open-source, **100% native profile state managers** for both **Windows** (PowerShell) and **macOS** (POSIX Shell / Zsh / JXA). It flips that flag, injects the SKU credentials, preserves your existing profile data without corruption, and runs 100% offline. **Zero external dependencies: No Node.js. No Deno. No Python. No Homebrew.**
+This script is an open-source **local configuration & profile state manager**. It flips that flag, injects the SKU credentials, preserves your existing profile data without corruption (no UTF-8 BOM garbage, no depth truncation), and runs 100% offline. No Node.js. No Deno. No compilers. Just native PowerShell.
 
 ---
 
 ## ⚡ Quick Run (One-Liners)
 
-### 🪟 Windows (PowerShell 5.1+ / 7+)
-Open any PowerShell terminal (standard user or Admin) and execute via your preferred mirror:
+Open any PowerShell terminal (standard user or Admin) and execute via your preferred host:
 
-#### 🏔️ Codeberg (Primary / EU / Forgejo)
+### 🏔️ Option A: Codeberg (Primary / EU / Forgejo)
 ```powershell
 iex (iwr -Uri "https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" -UseBasicParsing).Content
 ```
 
-#### 🦊 GitLab (Mirror)
+### 🦊 Option B: GitLab (Mirror)
 ```powershell
 iex (iwr -Uri "https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/raw/main/scripts/profile.ps1" -UseBasicParsing).Content
 ```
 
----
-
-### 🍎 macOS (Terminal / Zsh / Bash)
-Open Terminal on macOS (Apple Silicon M1/M2/M3/M4 or Intel) and execute via your preferred mirror:
-
-#### 🏔️ Codeberg (Primary / EU / Forgejo)
-```bash
-curl -fsSL https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.sh | bash
-```
-
-#### 🦊 GitLab (Mirror)
-```bash
-curl -fsSL https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/raw/main/scripts/profile.sh | bash
-```
-
-*Auto-detects installed channels (Release, Beta, Nightly), backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch. Both mirrors provide identical, signed code.*
+*Auto-detects installed channels, backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch. Both mirrors provide identical, signed code.*
 
 ---
 
 ## 🛠️ CLI Parameters & Power-User Flags
 
-### 🪟 Windows Options (`profile.ps1`)
+Want more control than blind one-click execution? Run `profile.ps1` with dedicated switches:
+
 ```powershell
 .\profile.ps1 [-Channel <Release|Beta|Nightly|All>] [-Force] [-Install] [-UserDataPath <path>] [-Restore] [-NoBackup]
 ```
@@ -89,34 +73,25 @@ curl -fsSL https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/raw/ma
 | **`-Restore`** | `Switch` | `False` | Instant rollback. Restores original `Local State` from `.bak` backup files if you ever want to revert. |
 | **`-NoBackup`** | `Switch` | `False` | Live dangerously. Skips writing `.bak` files before applying modifications. |
 
+---
+
+### Real-World Examples
+
 ```powershell
-# Examples:
-.\profile.ps1                          # Auto-detect and configure
-.\profile.ps1 -Force                   # Auto-close running processes and patch
-.\profile.ps1 -Restore                 # Rollback configuration from .bak
-.\profile.ps1 -Install -Force          # Auto-download, install, and patch
-```
+# Standard: Detect whatever Brave Origin channels you have installed and configure them
+.\profile.ps1
 
-### 🍎 macOS Options (`profile.sh`)
-```bash
-./profile.sh [-c <Release|Beta|Nightly|All>] [-f] [-i] [-p <path>] [-r] [--no-backup]
-```
+# The "Just do it": Kill active browser instances automatically and patch
+.\profile.ps1 -Force
 
-| Flag | Argument | Default | What it does |
-| :--- | :--- | :--- | :--- |
-| **`-c, --channel`** | `Release\|Beta\|Nightly\|All` | `All` | Target specific release channels. |
-| **`-f, --force`** | None | `Disabled` | Automatically closes running Brave Origin instances without interactive prompt. |
-| **`-i, --install`** | None | `Disabled` | Downloads official `.dmg` matching your architecture (`arm64` or `x86_64`), mounts via `hdiutil`, and deploys to `/Applications`. |
-| **`-p, --path`** | `<path>` | `None` | Custom User Data directory path. |
-| **`-r, --restore`** | None | `Disabled` | Reverts `Local State` from the automatically created `.bak` file. |
-| **`--no-backup`** | None | `Disabled` | Skips creating `.bak` backup file. |
+# Rollback: Revert everything back to how it was before running the patch
+.\profile.ps1 -Restore
 
-```bash
-# Examples:
-./profile.sh                           # Auto-detect and configure installed channels
-./profile.sh -f                        # Force-close running Brave instances and patch
-./profile.sh -i -f                     # Download, mount DMG, deploy, and patch
-./profile.sh -r                        # Revert configuration from backup
+# Portable mode: Target an isolated build on an external drive
+.\profile.ps1 -UserDataPath "E:\PortableApps\Brave-Origin\User Data"
+
+# Missing the browser? Download, install, and configure in one command
+.\profile.ps1 -Install -Force
 ```
 
 ---

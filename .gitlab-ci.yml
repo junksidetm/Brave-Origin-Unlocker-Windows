@@ -6,13 +6,3 @@ validate-powershell:
   image: mcr.microsoft.com/powershell:lts-alpine
   script:
     - pwsh -Command "Write-Host 'Checking PowerShell syntax for ./scripts/profile.ps1...'; \$errors = \$null; \$content = Get-Content -Raw ./scripts/profile.ps1; [System.Management.Automation.Language.Parser]::ParseInput(\$content, [ref]\$null, [ref]\$errors); if (\$errors) { \$errors | Format-Table -AutoSize; exit 1 }; Write-Host 'Syntax validation passed!' -ForegroundColor Green"
-
-validate-macos-shell:
-  stage: test
-  image: alpine:latest
-  before_script:
-    - apk add --no-cache bash
-  script:
-    - echo "Checking shell syntax for ./scripts/profile.sh..."
-    - bash -n ./scripts/profile.sh
-    - echo "Shell syntax validation passed!"
