@@ -64,6 +64,24 @@ Want more control than blind one-click execution? Run `profile.ps1` with dedicat
 .\profile.ps1 [-Channel <Release|Beta|Nightly|All>] [-Force] [-Install] [-UserDataPath <path>] [-Restore] [-NoBackup]
 ```
 
+### PowerShell Parameter Block (`param`)
+```powershell
+param(
+    [ValidateSet("Release", "Beta", "Nightly", "All")]
+    [string]$Channel = "All",
+
+    [string]$UserDataPath,
+
+    [switch]$Install,
+
+    [switch]$Force,
+
+    [switch]$Restore,
+
+    [switch]$NoBackup
+)
+```
+
 | Parameter | Type | Default | What it does |
 | :--- | :--- | :--- | :--- |
 | **`-Channel`** | `String` | `"All"` | Target specific channels (`Release`, `Beta`, `Nightly`, or `All`). Won't create dummy ghost directories for versions you don't even have installed. |

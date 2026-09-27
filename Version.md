@@ -206,3 +206,11 @@
   - `Version.md` — Appended changelog entry documenting repository separation and rollback.
 - **Architectural Rationalization**:
   - Enforced strict repository boundaries. Windows and macOS tools now maintain independent, dedicated repositories for optimal modularity and clarity.
+
+### [2026-09-28 03:07:00 IST] - Documentation Parameter Signature Block
+- **Author**: mrdarksidetm
+- **Status**: Completed & Verified (100%)
+- **Target Platform**: Windows 10 / 11 (x64)
+- **Modules & Files Updated**:
+  - `README.md` — Added typed PowerShell parameter block (`param`) definition to clearly display CLI parameter defaults and validation sets.
+  - `Version.md` — Appended changelog entry.
