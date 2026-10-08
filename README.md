@@ -9,8 +9,9 @@
 **Because a $60 paywall for a stripped-down browser on Windows that is literally free on Linux is absurd.**
 
 <p>
-  <a href="https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/Codeberg-Repository-2185d0?logo=codeberg&logoColor=white" alt="Codeberg" /></a>
-  <a href="https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/GitLab-Mirror-fc6d26?logo=gitlab&logoColor=white" alt="GitLab" /></a>
+  <a href="https://github.com/junksidetm/Brave-Origin-Unlocker-Windows"><img src="https://img.shields.io/badge/GitHub-Main-181717?logo=github&logoColor=white" alt="GitHub Main" /></a>
+  <a href="https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/Codeberg-Mirror-2185d0?logo=codeberg&logoColor=white" alt="Codeberg Mirror" /></a>
+  <a href="https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows"><img src="https://img.shields.io/badge/GitLab-Mirror-fc6d26?logo=gitlab&logoColor=white" alt="GitLab Mirror" /></a>
   <img src="https://img.shields.io/badge/PowerShell-5.1%2B%20%7C%207%2B-5391FE?logo=powershell&logoColor=white" alt="PowerShell" />
   <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
 </p>
@@ -137,17 +138,21 @@ On Linux, Brave literally distributes Brave Origin for free. Under the Mozilla P
 
 ---
 
-## 🌐 Dual-Mirror Git Hosts: Codeberg & GitLab
-
-To ensure continuous availability and resilience against centralized platform takedowns, this repository is maintained with identical, cryptographically signed commits across two independent hosts:
+## 🌐 Source Mirrors: GitHub, Codeberg & GitLab
+ 
+To ensure continuous availability and resilience against centralized platform takedowns, this repository is maintained with identical, cryptographically signed commits across three hosts:
 
 | Provider | Role / Framework | Clone URL | Web Repository | Issue Tracker |
 | :--- | :--- | :--- | :--- | :--- |
-| **Codeberg** | Primary (EU / Forgejo) | `https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows.git` | [codeberg.org/...](https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows) | [Codeberg Issues](https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/issues) |
+| **GitHub** | Main Repository | `https://github.com/junksidetm/Brave-Origin-Unlocker-Windows.git` | [github.com/...](https://github.com/junksidetm/Brave-Origin-Unlocker-Windows) | [GitHub Issues](https://github.com/junksidetm/Brave-Origin-Unlocker-Windows/issues) |
+| **Codeberg** | Mirror (EU / Forgejo) | `https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows.git` | [codeberg.org/...](https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows) | [Codeberg Issues](https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/issues) |
 | **GitLab** | Secondary Mirror | `https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows.git` | [gitlab.com/...](https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows) | [GitLab Issues](https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/issues) |
 
-### Clone via either provider:
+### Clone via any provider:
 ```powershell
+# Clone from GitHub (HTTPS)
+git clone https://github.com/junksidetm/Brave-Origin-Unlocker-Windows.git
+
 # Clone from Codeberg (HTTPS or SSH)
 git clone https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows.git
 git clone git@codeberg.org:mrdarksidetm/Brave-Origin-Profile-Windows.git

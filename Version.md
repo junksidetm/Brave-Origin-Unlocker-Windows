@@ -214,3 +214,12 @@
 - **Modules & Files Updated**:
   - `README.md` — Added typed PowerShell parameter block (`param`) definition to clearly display CLI parameter defaults and validation sets.
   - `Version.md` — Appended changelog entry.
+
+### [2026-10-08 18:18:30 IST] - Source Mirrors GitHub Integration
+- **Author**: Antigravity Pair Programmer
+- **Status**: Completed & Verified (100%)
+- **Target Platform**: Windows 10 / 11 (x64)
+- **Target Repository**: Brave-Origin-Profile-Windows
+- **Modules & Files Updated**:
+  - `README.md` — Added GitHub (Main) repository badge and updated Source Mirrors table to include GitHub alongside Codeberg and GitLab.
+  - `Version.md` — Appended changelog entry.
