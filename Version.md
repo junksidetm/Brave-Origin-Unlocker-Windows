@@ -223,3 +223,10 @@
 - **Modules & Files Updated**:
   - `README.md` — Added GitHub (Main) repository badge and updated Source Mirrors table to include GitHub alongside Codeberg and GitLab.
   - `Version.md` — Appended changelog entry.
+
+## [2026-10-09 19:28:00 IST] - Codeberg Forgejo Actions Integration
+- **Action**: Added Codeberg Actions workflow for automated PowerShell script syntax validation on Codeberg mirror.
+- **Files Added**:
+  - `.forgejo/workflows/validate.yml`
+  - `Version.md`
+- **Status**: 100% (Completed & Synced)

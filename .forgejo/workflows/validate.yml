@@ -1,0 +1,27 @@
+name: Validate PowerShell Script
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate PowerShell Script Syntax
+        shell: pwsh
+        run: |
+          Write-Host "Checking PowerShell syntax for ./scripts/profile.ps1..."
+          $errors = $null
+          $content = Get-Content -Raw ./scripts/profile.ps1
+          [System.Management.Automation.Language.Parser]::ParseInput($content, [ref]$null, [ref]$errors)
+          if ($errors) {
+            $errors | Format-Table -AutoSize
+            throw "Syntax error(s) found in scripts/profile.ps1"
+          }
+          Write-Host "Syntax validation passed!" -ForegroundColor Green
