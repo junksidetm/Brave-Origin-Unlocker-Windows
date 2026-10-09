@@ -230,3 +230,18 @@
   - `.forgejo/workflows/validate.yml`
   - `Version.md`
 - **Status**: 100% (Completed & Synced)
+
+## [2026-10-09 22:15:00 IST] - Hub Ecosystem URL Migration
+- **Action**: Migrated hub navigation links from `mrdarksidetm.github.io` to `junksidetm.github.io`.
+- **Files Modified**:
+  - `docs/index.html`: Updated navbar brand, Atelier Hub navigation, and footer links.
+  - `Version.md`: Appended ledger entry.
+- **Status**: 100% (Completed)
+
+## [2026-10-09 23:12:00 IST] - Automated GitHub Pages Deployment Pipeline
+- **Action**: Established automated GitHub Pages deployment workflow deploying `docs/` showcase on `main` branch push.
+- **Files Added**:
+  - `.github/workflows/pages.yml`
+- **Files Modified**:
+  - `Version.md`: Appended tracking entry.
+- **Status**: 100% (Completed)
