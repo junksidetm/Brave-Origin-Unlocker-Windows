@@ -18,6 +18,7 @@
 
 <p>
   <a href="#-quick-run-one-liners">Quick Run</a> •
+  <a href="#-clean-slate--complete-removal-one-liners">Clean Slate</a> •
   <a href="#-cli-parameters--power-user-flags">CLI Options</a> •
   <a href="#-dual-mirror-git-hosts-codeberg--gitlab">Mirrors</a> •
   <a href="#-the-open-source-reality-mpl-20-loophole">MPL 2.0 Loophole</a> •
@@ -43,17 +44,45 @@ This script is an open-source **local configuration & profile state manager**. I
 
 Open any PowerShell terminal (standard user or Admin) and execute via your preferred host:
 
-### 🏔️ Option A: Codeberg (Primary / EU / Forgejo)
+### 🐙 Option A: GitHub (Main / Official)
+```powershell
+iex (iwr -Uri "https://raw.githubusercontent.com/junksidetm/Brave-Origin-Unlocker-Windows/main/scripts/profile.ps1" -UseBasicParsing).Content
+```
+
+### 🏔️ Option B: Codeberg (Mirror / EU / Forgejo)
 ```powershell
 iex (iwr -Uri "https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/profile.ps1" -UseBasicParsing).Content
 ```
 
-### 🦊 Option B: GitLab (Mirror)
+### 🦊 Option C: GitLab (Mirror)
 ```powershell
 iex (iwr -Uri "https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/raw/main/scripts/profile.ps1" -UseBasicParsing).Content
 ```
 
-*Auto-detects installed channels, backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch. Both mirrors provide identical, signed code.*
+*Auto-detects installed channels, backs up your config to `.bak`, closes locked browser processes cleanly, and applies the configuration patch. All hosts provide identical, signed code.*
+
+---
+
+## 🧹 Clean Slate & Complete Removal (One-Liners)
+
+Want to completely remove Brave Origin, all user profiles, configurations, caches, and leftover shortcuts as if it was never installed? Run the clean slate uninstaller:
+
+### 🐙 Option A: GitHub (Main / Official)
+```powershell
+iex (iwr -Uri "https://raw.githubusercontent.com/junksidetm/Brave-Origin-Unlocker-Windows/main/scripts/uninstall.ps1" -UseBasicParsing).Content
+```
+
+### 🏔️ Option B: Codeberg (Mirror / EU / Forgejo)
+```powershell
+iex (iwr -Uri "https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows/raw/branch/main/scripts/uninstall.ps1" -UseBasicParsing).Content
+```
+
+### 🦊 Option C: GitLab (Mirror)
+```powershell
+iex (iwr -Uri "https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/raw/main/scripts/uninstall.ps1" -UseBasicParsing).Content
+```
+
+*Closes active Brave Origin instances, invokes native Chromium uninstallation, wipes application directories, purges user profiles and caches from `%LOCALAPPDATA%\BraveSoftware\Brave-Origin*`, removes Desktop and Start Menu shortcuts, deletes registry keys, and clears temporary installer binaries.*
 
 ---
 
@@ -62,7 +91,7 @@ iex (iwr -Uri "https://gitlab.com/mrdarksidetm/Brave-Origin-Profile-Windows/-/ra
 Want more control than blind one-click execution? Run `profile.ps1` with dedicated switches:
 
 ```powershell
-.\profile.ps1 [-Channel <Release|Beta|Nightly|All>] [-Force] [-Install] [-UserDataPath <path>] [-Restore] [-NoBackup]
+.\profile.ps1 [-Channel <Release|Beta|Nightly|All>] [-Force] [-Install] [-UserDataPath <path>] [-Restore] [-Uninstall] [-NoBackup]
 ```
 
 ### PowerShell Parameter Block (`param`)
@@ -79,6 +108,8 @@ param(
 
     [switch]$Restore,
 
+    [switch]$Uninstall,
+
     [switch]$NoBackup
 )
 ```
@@ -90,6 +121,7 @@ param(
 | **`-Install`** | `Switch` | `False` | No Brave Origin found? Pulls the official installer directly from Brave's CDN (no rate-limit traps) and kicks off setup. |
 | **`-UserDataPath`** | `String` | `None` | Got a portable install or custom profile on a USB stick? Point directly to your `User Data` folder or `Local State` file. |
 | **`-Restore`** | `Switch` | `False` | Instant rollback. Restores original `Local State` from `.bak` backup files if you ever want to revert. |
+| **`-Uninstall`** | `Switch` | `False` | Complete clean slate removal. Uninstalls applications, purges user profiles, caches, shortcuts, and registry keys. |
 | **`-NoBackup`** | `Switch` | `False` | Live dangerously. Skips writing `.bak` files before applying modifications. |
 
 ---
@@ -111,6 +143,12 @@ param(
 
 # Missing the browser? Download, install, and configure in one command
 .\profile.ps1 -Install -Force
+
+# Clean Slate: Completely uninstall Brave Origin and delete all user profiles/caches
+.\profile.ps1 -Uninstall
+
+# Force clean slate without confirmation prompt
+.\profile.ps1 -Uninstall -Force
 ```
 
 ---

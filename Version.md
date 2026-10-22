@@ -252,3 +252,56 @@
   - `README.md`
   - `Version.md`
 - **Status**: 100% (Completed & Synced)
+
+## [2026-10-21 00:30:00 IST] - Comprehensive Repository Directory & File System Index
+- **Action**: Fully indexed all repository directories (9) and files (19), mapping structural hierarchy and defining the functional responsibility of each component.
+- **Directory Structure & Purpose**:
+  - `.forgejo/`: Forgejo / Codeberg platform repository configuration.
+  - `.forgejo/workflows/`: Forgejo Actions workflows automating CI/CD on Codeberg mirror.
+  - `.github/`: GitHub platform repository configuration and community templates.
+  - `.github/ISSUE_TEMPLATE/`: Repository directory component: `.github/ISSUE_TEMPLATE`.
+  - `.github/workflows/`: GitHub Actions CI/CD workflows for builds, releases, and tests.
+  - `assests/`: Visual assets, iconography, vector drawables, images, and fonts.
+  - `assests/images/`: Asset directory storing images resources.
+  - `docs/`: Project documentation, architectural specifications, and web showcase.
+  - `scripts/`: Operational scripts, automation workflows, build hooks, and utility tooling.
+- **File System Manifest & Functional Roles**:
+  - `.forgejo/workflows/validate.yml`: Automated CI/CD workflow (`Validate PowerShell Script`) managing pipeline stages, builds, tests, or releases.
+  - `.github/ISSUE_TEMPLATE/bug_report.md`: *Describe the bug**.
+  - `.github/ISSUE_TEMPLATE/feature_request.md`: *Is your feature request related to a problem? Please describe.**.
+  - `.github/pull_request_template.md`: # Description.
+  - `.github/workflows/pages.yml`: Automated CI/CD workflow (`Deploy GitHub Pages`) managing pipeline stages, builds, tests, or releases.
+  - `.github/workflows/validate.yml`: Automated CI/CD workflow (`Validate PowerShell Script`) managing pipeline stages, builds, tests, or releases.
+  - `.gitignore`: Git exclusion specifications ignoring build artifacts, local secrets, and IDE temporary caches.
+  - `.gitlab-ci.yml`: GitLab CI/CD automated pipeline specification for test execution and mirror synchronization.
+  - `assests/images/Brave-origin-Profile-Dark.svg`: Scalable vector graphic resource for UI iconography and branding.
+  - `assests/images/Brave-origin-Profile-Light.svg`: Scalable vector graphic resource for UI iconography and branding.
+  - `assests/images/Download-File.svg`: Scalable vector graphic resource for UI iconography and branding.
+  - `docs/index.html`: HTML web page markup or documentation entrypoint.
+  - `docs/logo.svg`: Scalable vector graphic resource for UI iconography and branding.
+  - `LEGAL.md`: Legal, Interoperability & Compliance Notice.
+  - `LICENSE`: Open-source software license defining terms of use, distribution, and attribution.
+  - `README.md`: Repository documentation, architectural overview, usage instructions, and downstream integration guidelines.
+  - `scripts/BraveOriginSetup.exe`: Repository asset file: `BraveOriginSetup.exe`.
+  - `scripts/profile.ps1`: PowerShell system automation and administrative execution script.
+  - `Version.md`: Permanent, immutable project ledger tracking historical changelogs, architecture evolution, and component manifests.
+- **Status**: 100% (Completed & Verified across repository)
+
+## [2026-10-22 23:32:00 IST] - Clean Slate Uninstaller Suite & GitHub Main Alignment
+- **Action**: Implemented standalone clean slate uninstaller, added `-Uninstall` CLI flag to profile.ps1, and aligned documentation to feature GitHub as Main with Codeberg and GitLab as active mirrors.
+- **Files Added**:
+  - `scripts/uninstall.ps1`
+- **Files Modified**:
+  - `scripts/profile.ps1`
+  - `README.md`
+  - `docs/index.html`
+  - `.github/workflows/validate.yml`
+  - `.forgejo/workflows/validate.yml`
+  - `.gitlab-ci.yml`
+  - `Version.md`
+- **Detailed Features & Enhancements**:
+  - `scripts/uninstall.ps1`: Zero-dependency PowerShell uninstaller that terminates running Brave Origin processes, executes native Chromium uninstallation if present, purges application directories across `%LOCALAPPDATA%`, `%ProgramFiles%`, and `%ProgramFiles(x86)%`, wipes user profiles and caches, deletes Desktop, Start Menu, and Taskbar shortcuts, cleans registry entries across HKCU/HKLM, and removes temporary installer binaries.
+  - `scripts/profile.ps1`: Added `-Uninstall` switch to CLI `param()` block allowing single-command clean slate execution via `.\profile.ps1 -Uninstall`.
+  - `README.md` & `docs/index.html`: Structured quick run and clean slate one-liners with GitHub as Option A (Main / Official), Codeberg as Option B (Mirror / EU / Forgejo), and GitLab as Option C (Mirror).
+  - **CI Workflows**: Updated GitHub Actions, Forgejo Actions, and GitLab CI pipelines to validate PowerShell syntax for both `profile.ps1` and `uninstall.ps1`.
+- **Status**: 100% (Completed & Verified)

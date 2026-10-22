@@ -16,12 +16,15 @@ jobs:
       - name: Validate PowerShell Script Syntax
         shell: pwsh
         run: |
-          Write-Host "Checking PowerShell syntax for ./scripts/profile.ps1..."
-          $errors = $null
-          $content = Get-Content -Raw ./scripts/profile.ps1
-          [System.Management.Automation.Language.Parser]::ParseInput($content, [ref]$null, [ref]$errors)
-          if ($errors) {
-            $errors | Format-Table -AutoSize
-            throw "Syntax error(s) found in scripts/profile.ps1"
+          $scripts = @("./scripts/profile.ps1", "./scripts/uninstall.ps1")
+          foreach ($script in $scripts) {
+            Write-Host "Checking PowerShell syntax for $script..."
+            $errors = $null
+            $content = Get-Content -Raw $script
+            [System.Management.Automation.Language.Parser]::ParseInput($content, [ref]$null, [ref]$errors)
+            if ($errors) {
+              $errors | Format-Table -AutoSize
+              throw "Syntax error(s) found in $script"
+            }
           }
           Write-Host "Syntax validation passed!" -ForegroundColor Green

@@ -24,6 +24,9 @@
 .PARAMETER Restore
     Restores the previous 'Local State.bak' configuration backup.
 
+.PARAMETER Uninstall
+    Completely uninstalls Brave Origin applications, user profiles, caches, and shortcuts.
+
 .PARAMETER NoBackup
     Skips creating a backup (.bak) of the original configuration file.
 
@@ -38,6 +41,10 @@
 .EXAMPLE
     .\profile.ps1 -Restore
     Restores the original Local State files from backup.
+
+.EXAMPLE
+    .\profile.ps1 -Uninstall
+    Completely removes Brave Origin and restores a clean slate.
 
 .EXAMPLE
     .\profile.ps1 -UserDataPath "D:\PortableApps\Brave-Origin\Data"
@@ -55,6 +62,8 @@ param(
     [switch]$Force,
 
     [switch]$Restore,
+
+    [switch]$Uninstall,
 
     [switch]$NoBackup
 )
@@ -367,11 +376,176 @@ function Restore-LocalStateFile {
     }
 }
 
+function Invoke-BraveOriginUninstall {
+    param([switch]$ForceUninstall)
+
+    Write-Host ""
+    Write-Host "======================================================" -ForegroundColor Cyan
+    Write-Host "   Brave Origin Complete Clean Slate (Windows)        " -ForegroundColor Cyan
+    Write-Host "======================================================" -ForegroundColor Cyan
+    Write-Host ""
+
+    if (-not $ForceUninstall) {
+        Write-Log -Level WARN "This will permanently remove Brave Origin applications, user profiles, caches, and shortcuts."
+        if ([Environment]::UserInteractive) {
+            $confirm = Read-Host "Are you sure you want to proceed with complete removal? (y/N)"
+            if ($confirm -notmatch '^[Yy]') {
+                Write-Log -Level INFO "Uninstallation cancelled by user."
+                return
+            }
+        }
+    }
+
+    $braveProcs = Get-Process -Name "brave" -ErrorAction SilentlyContinue | Where-Object {
+        try {
+            $_.Path -like "*Brave-Origin*" -or $_.Path -like "*BraveSoftware\Brave-Origin*"
+        } catch {
+            $true
+        }
+    }
+
+    if ($braveProcs) {
+        Write-Log -Level INFO "Terminating running Brave Origin processes..."
+        $braveProcs | Stop-Process -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 1
+        Write-Log -Level SUCCESS "Running processes closed."
+    }
+
+    $targetChannels = @()
+    switch ($Channel) {
+        "Release" { $targetChannels = @("Brave-Origin") }
+        "Beta"    { $targetChannels = @("Brave-Origin-Beta") }
+        "Nightly" { $targetChannels = @("Brave-Origin-Nightly") }
+        "All"     { $targetChannels = @("Brave-Origin", "Brave-Origin-Beta", "Brave-Origin-Nightly") }
+    }
+
+    foreach ($ch in $targetChannels) {
+        $chDisplay = $ch -replace "-", " "
+        Write-Log -Level INFO "Processing channel: $chDisplay..."
+
+        $setupLocations = @(
+            "$env:LOCALAPPDATA\BraveSoftware\$ch\Application",
+            "$env:ProgramFiles\BraveSoftware\$ch\Application",
+            "${env:ProgramFiles(x86)}\BraveSoftware\$ch\Application"
+        )
+
+        foreach ($loc in $setupLocations) {
+            if (Test-Path $loc) {
+                $installer = Get-ChildItem -Path $loc -Filter "setup.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+                if ($installer) {
+                    Write-Log -Level INFO "Executing native Chromium uninstaller for $chDisplay..."
+                    try {
+                        Start-Process -FilePath $installer.FullName -ArgumentList "--uninstall", "--force-uninstall", "--delete-profile" -Wait -WindowStyle Hidden -ErrorAction SilentlyContinue
+                        Start-Sleep -Seconds 1
+                    } catch {}
+                }
+            }
+        }
+
+        $foldersToPurge = @(
+            "$env:LOCALAPPDATA\BraveSoftware\$ch",
+            "$env:ProgramFiles\BraveSoftware\$ch",
+            "${env:ProgramFiles(x86)}\BraveSoftware\$ch",
+            "$env:APPDATA\BraveSoftware\$ch"
+        )
+
+        foreach ($folder in $foldersToPurge) {
+            if (Test-Path $folder) {
+                try {
+                    Remove-Item -Path $folder -Recurse -Force -ErrorAction Stop
+                    Write-Log -Level SUCCESS "Removed directory: $folder"
+                } catch {
+                    Write-Log -Level WARN "Could not completely delete $folder (file in use or permission denied)."
+                }
+            }
+        }
+
+        $shortcutLocations = @(
+            [Environment]::GetFolderPath('Desktop'),
+            [Environment]::GetFolderPath('CommonDesktop'),
+            "$env:APPDATA\Microsoft\Windows\Start Menu\Programs",
+            "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Brave Software",
+            "$env:ProgramData\Microsoft\Windows\Start Menu\Programs",
+            "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Brave Software",
+            "$env:APPDATA\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar"
+        )
+
+        foreach ($sLoc in $shortcutLocations) {
+            if (Test-Path $sLoc) {
+                $shortcuts = Get-ChildItem -Path $sLoc -Filter "*$chDisplay*.lnk" -ErrorAction SilentlyContinue
+                foreach ($s in $shortcuts) {
+                    try {
+                        Remove-Item -Path $s.FullName -Force -ErrorAction SilentlyContinue
+                        Write-Log -Level SUCCESS "Removed shortcut: $($s.FullName)"
+                    } catch {}
+                }
+            }
+        }
+
+        $regKeys = @(
+            "HKCU:\Software\BraveSoftware\$ch",
+            "HKCU:\Software\Clients\StartMenuInternet\$ch",
+            "HKLM:\Software\BraveSoftware\$ch",
+            "HKLM:\Software\WOW6432Node\BraveSoftware\$ch",
+            "HKLM:\Software\Clients\StartMenuInternet\$ch"
+        )
+
+        foreach ($rk in $regKeys) {
+            if (Test-Path $rk) {
+                try {
+                    Remove-Item -Path $rk -Recurse -Force -ErrorAction SilentlyContinue
+                    Write-Log -Level SUCCESS "Removed registry key: $rk"
+                } catch {}
+            }
+        }
+
+        $uninstallRegs = @(
+            "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall",
+            "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall",
+            "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+        )
+
+        foreach ($uReg in $uninstallRegs) {
+            if (Test-Path $uReg) {
+                $entries = Get-ChildItem -Path $uReg -ErrorAction SilentlyContinue
+                foreach ($entry in $entries) {
+                    try {
+                        $dName = (Get-ItemProperty -Path $entry.PSPath -Name "DisplayName" -ErrorAction SilentlyContinue).DisplayName
+                        if ($dName -and ($dName -like "*$chDisplay*" -or $dName -like "*$ch*")) {
+                            Remove-Item -Path $entry.PSPath -Recurse -Force -ErrorAction SilentlyContinue
+                            Write-Log -Level SUCCESS "Removed uninstall entry: $dName"
+                        }
+                    } catch {}
+                }
+            }
+        }
+    }
+
+    if ((Test-Path "$env:LOCALAPPDATA\BraveSoftware") -and ((Get-ChildItem -Path "$env:LOCALAPPDATA\BraveSoftware" -ErrorAction SilentlyContinue).Count -eq 0)) {
+        Remove-Item -Path "$env:LOCALAPPDATA\BraveSoftware" -Force -ErrorAction SilentlyContinue
+    }
+
+    $tempInstallers = Get-ChildItem -Path $env:TEMP -Filter "*BraveOriginSetup*.exe" -ErrorAction SilentlyContinue
+    foreach ($ti in $tempInstallers) {
+        Remove-Item -Path $ti.FullName -Force -ErrorAction SilentlyContinue
+    }
+    Remove-Item -Path "$env:TEMP\brave_installer*" -Recurse -Force -ErrorAction SilentlyContinue
+
+    Write-Host ""
+    Write-Host "[✔] Clean slate restored. All Brave Origin data, applications, and shortcuts completely removed." -ForegroundColor Green
+    Write-Host ""
+}
+
 # --- Entry Point ---
 Write-Host ""
 Write-Host "  Brave Origin Profile for Windows" -ForegroundColor Cyan
-Write-Host "  https://codeberg.org/mrdarksidetm/Brave-Origin-Profile-Windows" -ForegroundColor DarkGray
+Write-Host "  https://github.com/junksidetm/Brave-Origin-Unlocker-Windows" -ForegroundColor DarkGray
 Write-Host ""
+
+if ($Uninstall) {
+    Invoke-BraveOriginUninstall -ForceUninstall:$Force
+    return
+}
 
 $targets = @()
 
