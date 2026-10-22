@@ -396,9 +396,10 @@ function Invoke-BraveOriginUninstall {
         }
     }
 
-    $braveProcs = Get-Process -Name "brave" -ErrorAction SilentlyContinue | Where-Object {
+    $procNames = @("brave", "brave_crashpad_handler", "BraveUpdate", "BraveOriginSetup")
+    $braveProcs = Get-Process -Name $procNames -ErrorAction SilentlyContinue | Where-Object {
         try {
-            $_.Path -like "*Brave-Origin*" -or $_.Path -like "*BraveSoftware\Brave-Origin*"
+            $_.Path -like "*Brave-Origin*" -or $_.Path -like "*BraveSoftware\Brave-Origin*" -or $_.Name -like "*BraveOrigin*"
         } catch {
             $true
         }
@@ -530,6 +531,11 @@ function Invoke-BraveOriginUninstall {
         Remove-Item -Path $ti.FullName -Force -ErrorAction SilentlyContinue
     }
     Remove-Item -Path "$env:TEMP\brave_installer*" -Recurse -Force -ErrorAction SilentlyContinue
+
+    # 7. Unregister Scheduled Update Tasks
+    try {
+        Get-ScheduledTask -TaskName "*Brave*Origin*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue
+    } catch {}
 
     Write-Host ""
     Write-Host "[✔] Clean slate restored. All Brave Origin data, applications, and shortcuts completely removed." -ForegroundColor Green

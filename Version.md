@@ -305,3 +305,15 @@
   - `README.md` & `docs/index.html`: Structured quick run and clean slate one-liners with GitHub as Option A (Main / Official), Codeberg as Option B (Mirror / EU / Forgejo), and GitLab as Option C (Mirror).
   - **CI Workflows**: Updated GitHub Actions, Forgejo Actions, and GitLab CI pipelines to validate PowerShell syntax for both `profile.ps1` and `uninstall.ps1`.
 - **Status**: 100% (Completed & Verified)
+
+## [2026-10-22 23:48:00 IST] - Full Binary Purge & Multi-Process Uninstallation Suite
+- **Action**: Enhanced uninstallation routine across Windows to terminate crashpad/update handlers, invoke native Chromium uninstallation, unregister scheduled tasks, and purge all installation directories.
+- **Files Modified**:
+  - `scripts/profile.ps1`
+  - `scripts/uninstall.ps1`
+  - `Version.md`
+- **Detailed Enhancements**:
+  - Process Lifecycle Management: Terminate all associated child processes (`brave`, `brave_crashpad_handler`, `BraveUpdate`, `BraveOriginSetup`) before wiping files to prevent file locking issues on Windows.
+  - Native Uninstaller Execution: Discovers and executes `setup.exe --uninstall --force-uninstall --delete-profile` if present, then forcefully wipes application and profile directories.
+  - Scheduled Tasks Cleanup: Automatically detects and unregisters any `BraveUpdateTask` or `BraveOriginUpdateTask` scheduled tasks.
+- **Status**: 100% (Completed & Verified)
